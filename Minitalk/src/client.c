@@ -6,7 +6,7 @@
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:26:20 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/04/05 22:20:25 by hurasmi          ###   ########.fr       */
+/*   Updated: 2025/04/05 23:56:50 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ void char_to_binary(char c, int pid_server)
         if((c >> i) & 1)
         {
             kill(pid_server, SIGUSR2);
+            printf("1");
         }
         else
         {
             kill(pid_server, SIGUSR1);
+            printf("0");
         }
         i--;
+        usleep(100);
     }
+    
 }
 
 int main(int argc, char *argv[])

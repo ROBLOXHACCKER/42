@@ -6,8 +6,13 @@
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:26:27 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/04/04 12:38:58 by hurasmi          ###   ########.fr       */
+/*   Updated: 2025/04/05 23:12:43 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO
+/*
+    - come trasformare da lettera a binario
+    - studiare bitwise operation
+    a
+
+*/
