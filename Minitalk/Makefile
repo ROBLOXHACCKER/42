@@ -3,7 +3,7 @@ NAME = minitalk
 
 # Compilatore e flag
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR)
 
 # Cartelle
 SRC_DIR = src
@@ -14,10 +14,12 @@ PRINTF_DIR = include/ft_printf
 # File sorgenti
 SRCS_CLIENT = $(SRC_DIR)/client.c
 SRCS_SERVER = $(SRC_DIR)/server.c
+SRCS_MINIFUN = $(wildcard $(INCLUDE_DIR)/*.c)
 
 # File oggetto
 OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
 OBJS_SERVER = $(SRCS_SERVER:.c=.o)
+OBJS_MINIFUN = $(SRCS_MINIFUN:.c=.o)
 
 # Librerie
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -39,16 +41,16 @@ $(PRINTF):
 	$(PRINTF_RULE)
 
 # Compila il client
-client: $(OBJS_CLIENT) $(LIBFT) $(PRINTF)
-	$(CC) $(CFLAGS) $(OBJS_CLIENT) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -o client
+client: $(OBJS_CLIENT) $(OBJS_MINIFUN) $(LIBFT) $(PRINTF)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(OBJS_MINIFUN) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -o client
 
 # Compila il server
-server: $(OBJS_SERVER) $(LIBFT) $(PRINTF)
-	$(CC) $(CFLAGS) $(OBJS_SERVER) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -o server
+server: $(OBJS_SERVER) $(OBJS_MINIFUN) $(LIBFT) $(PRINTF)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) $(OBJS_MINIFUN) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf -o server
 
 # Regola per pulire i file oggetto
 clean:
-	rm -f $(OBJS_CLIENT) $(OBJS_SERVER)
+	rm -f $(OBJS_CLIENT) $(OBJS_SERVER) $(OBJS_MINIFUN)
 	$(LIBFT_RULE) clean
 	$(PRINTF_RULE) clean
 
@@ -60,4 +62,3 @@ fclean: clean
 
 # Regola per ricompilare tutto
 re: fclean all
-

@@ -6,7 +6,7 @@
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:26:33 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/04/05 23:12:32 by hurasmi          ###   ########.fr       */
+/*   Updated: 2025/04/06 22:30:02 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,8 @@
 #include <unistd.h>    
 #include <sys/types.h>  
 #include <signal.h>
+
+void handle_signal(int sig);
+void char_to_binary(char c, int pid_server);
 
 #endif
