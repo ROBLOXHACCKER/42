@@ -6,7 +6,7 @@
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:26:29 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/04/06 22:47:49 by hurasmi          ###   ########.fr       */
+/*   Updated: 2025/04/07 00:24:16 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	handle_signal(int sig)
 {
-	static char		byte;
-	static int		bit_count;
-
-	byte = 0;
-	bit_count = 0;
+	static char		byte = 0;
+	static int		bit_count = 0;
+	
 	if (sig == SIGUSR1)
 	{
 		byte = byte << 1;
