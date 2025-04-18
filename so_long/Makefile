@@ -1,18 +1,21 @@
-# **************************************************************************** #
-#                              MAKEFILE PER so_long                            #
-# **************************************************************************** #
-
 NAME = so_long
 
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
 MLX_FLAGS = -framework OpenGL -framework AppKit
-MLX_DIR = include/minilibx_opengl_20191021
-MLX_LIB = $(MLX_DIR)/libmlx.a
 
-INCLUDES = -Iinclude -I$(MLX_DIR)
+# Include e path
+INCLUDES = -Iinclude -Iinclude/minilibx_opengl_20191021
+MLX_LIB = include/minilibx_opengl_20191021/libmlx.a
 
-SRC = src/main.c
+SRC_DIR = src
+INC_DIR = include
+
+SRC = $(SRC_DIR)/main.c \
+	  $(INC_DIR)/system_manager.c \
+	  $(INC_DIR)/graphic_manager.c \
+	  $(INC_DIR)/key_menager.c
+
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
@@ -29,4 +32,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
