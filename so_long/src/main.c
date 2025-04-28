@@ -1,33 +1,39 @@
 #include "../include/utils.h"
 
-
 int main(void)
 {
     t_game game;
-    t_player player;
-    t_context ctx;
-    
-    game.title = "so_long";
-    game.win_height = 400;
-    game.win_width = 600;
+    t_block block = {0};
+    char **map;
+    int img_w, img_h;
 
-    player.color = 0x00FF00;
-    player.move.pos_x = 10;
-    player.move.pos_y = 10;
-    player.size_x = 40;
-    player.size_y = 40;
-    player.move.speed = 3;
-    player.move.move_down = 0;
-    player.move.move_left = 0;
-    player.move.move_up = 0;
-    player.move.move_right = 0;
+    block.width = 32;
+    block.height = 32;
+
+    game.block = block;
+    game.title = "so_long";
+    game.win_width = 600;
+    game.win_height = 400;
 
     game_init(&game);
 
-    render(&game, &player);
+    game.player.img = mlx_xpm_file_to_image(game.mlx, "./include/textures/player.xpm", &img_w, &img_h);
+    game.player.x = 1;
+    game.player.y = 1;
 
-    key_menager(&player, &game, &ctx);
+    map = read_map("./map/map.ber");
+    if (!map)
+    {
+        printf("Errore: impossibile leggere la mappa\n");
+        return 1;
+    }
+    game.map = map;
+
+    create_map(&game, &block, map);
+    render(&game, &game.player, &game.block);
+
+    key_manager(&game, NULL);
 
     mlx_loop(game.mlx);
-    return (0);
+    return 0;
 }

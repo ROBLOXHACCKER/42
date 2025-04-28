@@ -1,24 +1,49 @@
-#include "./minilibx_opengl_20191021/mlx.h"
 #include "./utils.h"
 
-void create_player(t_player *p, t_game *g)
+void render(t_game *g, t_player *p, t_block *b)
 {
-    p->img = mlx_new_image(g->mlx, p->size_x, p->size_y);
-    p->data = (int*)mlx_get_data_addr(p->img, &p->bpp, &p->size_line, &p->endian);
-}
+    static int total_collectibles = -1;
+    static int collected = 0;
+    int x, y;
 
-void draw_square(t_player *p)
-{
-    int i = 0;
-    while(i < p->size_x * p->size_y)
-        p->data[i++] = p->color;
-}
+    if (total_collectibles == -1)
+    {
+        total_collectibles = 0;
+        for (y = 0; g->map[y]; y++)
+            for (x = 0; g->map[y][x]; x++)
+                if (g->map[y][x] == 'C')
+                    total_collectibles++;
+    }
 
-void render(t_game *g, t_player *p)
-{
-    create_player(p, g);
-    draw_square(p);
-    mlx_put_image_to_window(g->mlx, g->win, p->img, p->move.pos_x, p->move.pos_y);
-    mlx_destroy_image(g->mlx, p->img);
-}
+    // Se il player è sopra un collezionabile
+    if (g->map[p->y][p->x] == 'C')
+    {
+        g->map[p->y][p->x] = '0';
+        collected++;
+    }
 
+    mlx_clear_window(g->mlx, g->win);
+    create_map(g, b, g->map);
+
+    // Dopo create_map, disegna solo elementi dinamici
+    for (y = 0; g->map[y]; y++)
+    {
+        for (x = 0; g->map[y][x]; x++)
+        {
+            if (g->map[y][x] == 'C') // disegna reward sopra ground
+                render_block("./include/textures/collect.xpm", g, b, x, y);
+            if (collected == total_collectibles && g->map[y][x] == 'E') // disegna uscita solo dopo
+                render_block("./include/textures/exit.xpm", g, b, x, y);
+        }
+    }
+
+    // Disegna player sopra tutto
+    mlx_put_image_to_window(g->mlx, g->win, p->img, p->x * b->width, p->y * b->height);
+
+    // Se player è sull'uscita dopo aver preso tutto, termina
+    if (collected == total_collectibles && g->map[p->y][p->x] == 'E')
+    {
+        printf("Hai vinto!\n");
+        exit(0);
+    }
+}

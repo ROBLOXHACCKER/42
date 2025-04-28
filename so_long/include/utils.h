@@ -1,58 +1,43 @@
+#ifndef UTILS_H
+# define UTILS_H
+
 #include "./minilibx_opengl_20191021/mlx.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-typedef struct s_movement
+// Strutture dati
+typedef struct s_block
 {
-    int pos_x;
-    int pos_y;
-    int move_left;
-    int move_right;
-    int move_down;
-    int move_up;
-    int speed;
-}t_movement;
+    void *img;
+    int width;
+    int height;
+} t_block;
 
-typedef struct s_player
-{
-    void* img;
-    int*  data;
-    int   color;
-    int   size_x;
-    int   size_y;
-    int   bpp;
-    int   size_line;
-    int   endian;
-    t_movement move;
-}t_player;
+typedef struct s_player {
+    void *img;
+    int x;
+    int y;
+} t_player;
 
 typedef struct s_game
 {
-    void  *mlx;
-    void  *win;
-    int   win_width;
-    int   win_height;
-    char* title;
+    void *mlx;
+    void *win;
+    int win_width;
+    int win_height;
+    char *title;
+    char **map;
+    t_player player;
+    t_block block;
+} t_game;
 
-}t_game;
-
-typedef struct s_context {
-    t_game *g;
-    t_player *p;
-} t_context;
-
-//system manager
+// Funzioni
 void game_init(t_game *g);
+void render(t_game *g, t_player *p, t_block *b);
+void key_manager(t_game *g, void *unused);
+void render_block(char *path, t_game *g, t_block *b, int x, int y);
+void create_map(t_game *g, t_block *b, char **map);
+char **read_map(const char *filename);
 
-//graphic manager
-void draw_square(t_player *p);
-void create_player(t_player *p, t_game *g);
-void render(t_game *g, t_player *p);
-
-// key manager
-int key_hook_press(int keycode, t_player *p);
-int key_hook_release(int keycode, t_player *p);
-int game_loop(void *param);
-void key_menager(t_player *p, t_game *g, t_context *c);
-
+#endif
