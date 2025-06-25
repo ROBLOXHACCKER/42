@@ -12,8 +12,8 @@ int main(void)
 
     game.block = block;
     game.title = "so_long";
-    game.win_width = 600;
-    game.win_height = 400;
+    game.win_width = 1600;
+    game.win_height = 1400;
 
     game_init(&game);
 
