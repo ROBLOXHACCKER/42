@@ -1,45 +1,45 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/07 10:00:00 by hurasmi           #+#    #+#              #
+#    Updated: 2025/06/29 16:54:50 by hurasmi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = so_long
-
-CC = clang
-CFLAGS = -Wall -Wextra -Werror -g
-MLX_FLAGS = -framework OpenGL -framework AppKit
-
-# Include and path settings
-INCLUDES = -Iinclude -Iinclude/minilibx_opengl_20191021
-MLX_LIB = include/minilibx_opengl_20191021/libmlx.a
 
 SRC_DIR = src
 INC_DIR = include
+MLX_DIR = $(INC_DIR)/minilibx_opengl_20191021
 
-# Collect all .c files under src and include
-SRC = $(SRC_DIR)/main.c \
-      $(INC_DIR)/graphic_manager.c \
-      $(INC_DIR)/key_menager.c \
-      $(INC_DIR)/map_menager.c \
-      $(INC_DIR)/system_manager.c
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(SRCS:.c=.o)
 
-OBJ = $(SRC:.c=.o)
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I$(MLX_DIR)
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
-# Default target
 all: $(NAME)
 
-# Link the object files into the final binary
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(MLX_LIB) $(INCLUDES) $(MLX_FLAGS) -o $(NAME)
+$(NAME): $(OBJS)
+	$(MAKE) -C $(MLX_DIR) > /dev/null
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
-# Rule for compiling .c to .o
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up object files
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJS)
+	$(MAKE) -C $(MLX_DIR) clean > /dev/null
 
-# Clean everything including the binary
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C $(MLX_DIR) clean > /dev/null
 
-# Rebuild everything
 re: fclean all
 
 .PHONY: all clean fclean re
