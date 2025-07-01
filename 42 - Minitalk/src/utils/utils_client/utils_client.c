@@ -6,7 +6,7 @@
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 08:49:10 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/07/01 12:41:57 by hurasmi          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:51:42 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	send_char(pid_t server_pid, char c)
 				exit(1);
 			}
 		}
-		usleep(1000);
+		usleep(300);
 	}
 }
