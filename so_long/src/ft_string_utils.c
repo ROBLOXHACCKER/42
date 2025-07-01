@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_string_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/01 16:00:47 by hurasmi           #+#    #+#             */
+/*   Updated: 2025/07/01 16:08:25 by hurasmi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/utils.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,8 +18,8 @@
 char	*ft_strdup(const char *s)
 {
 	char	*dup;
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 
 	len = 0;
 	while (s[len])
@@ -66,6 +78,8 @@ static void	ft_putnbr(int n)
 	write(1, &c, 1);
 }
 
+void	ft_print_arg(char type, va_list args);
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
@@ -80,12 +94,7 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%' && format[i + 1])
 		{
 			i++;
-			if (format[i] == 's')
-				ft_putstr(va_arg(args, char *));
-			else if (format[i] == 'd')
-				ft_putnbr(va_arg(args, int));
-			else
-				write(1, &format[i], 1);
+			ft_print_arg(format[i], args);
 		}
 		else
 			write(1, &format[i], 1);
@@ -94,4 +103,4 @@ int	ft_printf(const char *format, ...)
 	}
 	va_end(args);
 	return (count);
-} 
+}

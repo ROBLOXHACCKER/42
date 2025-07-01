@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_manager.c                                   :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 16:10:32 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/07/01 16:06:49 by hurasmi          ###   ########.fr       */
+/*   Created: 2025/07/01 16:10:00 by hurasmi           #+#    #+#             */
+/*   Updated: 2025/07/01 16:09:21 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./utils.h"
+#include <stdarg.h>
+#include <unistd.h>
+#include "utils.h"
 
-void	game_init(t_game *g)
+void	ft_print_arg(char type, va_list args)
 {
-	g->mlx = mlx_init();
-	g->win = mlx_new_window(g->mlx, g->win_width, g->win_height, g->title);
+	if (type == 's')
+		ft_putstr(va_arg(args, char *));
+	else if (type == 'd')
+		ft_putnbr(va_arg(args, int));
+	else
+		write(1, &type, 1);
 }
