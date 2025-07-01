@@ -6,7 +6,7 @@
 /*   By: hurasmi <hurasmi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 10:32:00 by hurasmi           #+#    #+#             */
-/*   Updated: 2025/07/01 11:35:33 by hurasmi          ###   ########.fr       */
+/*   Updated: 2025/07/01 12:41:08 by hurasmi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
+#include <sys/types.h>
 # include "../libs/ft_printf/includes/ft_printf.h"
 # include "../libs/libft/libft.h"
 
